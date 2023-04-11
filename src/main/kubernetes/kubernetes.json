@@ -4,7 +4,7 @@
   "metadata" : {
     "annotations" : {
       "app.quarkus.io/commit-id" : "d81e5570bd3af5068aed5755d48174b1660ab79b",
-      "app.quarkus.io/build-timestamp" : "2023-04-11 - 21:24:53 +0000",
+      "app.quarkus.io/build-timestamp" : "2023-04-11 - 21:09:18 +0000",
       "prometheus.io/scrape" : "true",
       "prometheus.io/path" : "/q/metrics",
       "prometheus.io/port" : "8080",
@@ -28,7 +28,7 @@
       "metadata" : {
         "annotations" : {
           "app.quarkus.io/commit-id" : "d81e5570bd3af5068aed5755d48174b1660ab79b",
-          "app.quarkus.io/build-timestamp" : "2023-04-11 - 21:24:53 +0000",
+          "app.quarkus.io/build-timestamp" : "2023-04-11 - 21:09:18 +0000",
           "prometheus.io/scrape" : "true",
           "prometheus.io/path" : "/q/metrics",
           "prometheus.io/port" : "8080",
@@ -49,7 +49,7 @@
               }
             }
           } ],
-          "image" : "quay.io/systemcraftsman/kubegame-operator:0.0.1-SNAPSHOT",
+          "image" : "mabulgu/kubegame-operator:0.0.1-SNAPSHOT",
           "imagePullPolicy" : "Always",
           "livenessProbe" : {
             "failureThreshold" : 3,
@@ -189,7 +189,7 @@
   "metadata" : {
     "annotations" : {
       "app.quarkus.io/commit-id" : "d81e5570bd3af5068aed5755d48174b1660ab79b",
-      "app.quarkus.io/build-timestamp" : "2023-04-11 - 21:24:53 +0000"
+      "app.quarkus.io/build-timestamp" : "2023-04-11 - 21:09:18 +0000"
     },
     "labels" : {
       "app.kubernetes.io/version" : "0.0.1-SNAPSHOT",
@@ -220,7 +220,7 @@
   "metadata" : {
     "annotations" : {
       "app.quarkus.io/commit-id" : "d81e5570bd3af5068aed5755d48174b1660ab79b",
-      "app.quarkus.io/build-timestamp" : "2023-04-11 - 21:24:53 +0000",
+      "app.quarkus.io/build-timestamp" : "2023-04-11 - 21:09:18 +0000",
       "prometheus.io/scrape" : "true",
       "prometheus.io/path" : "/q/metrics",
       "prometheus.io/port" : "8080",
@@ -245,28 +245,6 @@
     },
     "type" : "ClusterIP"
   }
-},{
-  "apiVersion" : "rbac.authorization.k8s.io/v1",
-  "kind" : "ClusterRole",
-  "metadata" : {
-    "name" : "worldreconciler-cluster-role"
-  },
-  "rules" : [ {
-    "apiGroups" : [ "kubegame.systemcraftsman.com" ],
-    "resources" : [ "worlds", "worlds/status", "worlds/finalizers" ],
-    "verbs" : [ "get", "list", "watch", "patch", "update", "create", "delete" ]
-  } ]
-},{
-  "apiVersion" : "rbac.authorization.k8s.io/v1",
-  "kind" : "ClusterRole",
-  "metadata" : {
-    "name" : "gamereconciler-cluster-role"
-  },
-  "rules" : [ {
-    "apiGroups" : [ "kubegame.systemcraftsman.com" ],
-    "resources" : [ "games", "games/status", "games/finalizers" ],
-    "verbs" : [ "get", "list", "watch", "patch", "update", "create", "delete" ]
-  } ]
 },{
   "apiVersion" : "rbac.authorization.k8s.io/v1",
   "kind" : "ClusterRoleBinding",
@@ -326,5 +304,27 @@
   "subjects" : [ {
     "kind" : "ServiceAccount",
     "name" : "kubegame-operator"
+  } ]
+},{
+  "apiVersion" : "rbac.authorization.k8s.io/v1",
+  "kind" : "ClusterRole",
+  "metadata" : {
+    "name" : "worldreconciler-cluster-role"
+  },
+  "rules" : [ {
+    "apiGroups" : [ "kubegame.systemcraftsman.com" ],
+    "resources" : [ "worlds", "worlds/status", "worlds/finalizers" ],
+    "verbs" : [ "get", "list", "watch", "patch", "update", "create", "delete" ]
+  } ]
+},{
+  "apiVersion" : "rbac.authorization.k8s.io/v1",
+  "kind" : "ClusterRole",
+  "metadata" : {
+    "name" : "gamereconciler-cluster-role"
+  },
+  "rules" : [ {
+    "apiGroups" : [ "kubegame.systemcraftsman.com" ],
+    "resources" : [ "games", "games/status", "games/finalizers" ],
+    "verbs" : [ "get", "list", "watch", "patch", "update", "create", "delete" ]
   } ]
 }]

@@ -13,4 +13,16 @@ resources:
   domain: kubegame.systemcraftsman.com
   kind: Game
   version: v1alpha1
+- api:
+    crdVersion: v1
+    namespaced: true
+  domain: kubegame.systemcraftsman.com
+  kind: World
+  version: v1alpha1
+- api:
+    crdVersion: v1
+    namespaced: true
+  domain: kubegame.systemcraftsman.com
+  kind: Avatar
+  version: v1alpha1
 version: "3"

@@ -87,12 +87,14 @@ io.quarkus.arc:arc::jar:2.16.3.Final
 io.quarkus.security:quarkus-security::jar:1.1.4.Final
 io.quarkus:quarkus-arc::jar:2.16.3.Final
 io.quarkus:quarkus-bootstrap-runner::jar:2.16.3.Final
+io.quarkus:quarkus-container-image-jib::jar:2.16.3.Final
 io.quarkus:quarkus-container-image::jar:2.16.3.Final
 io.quarkus:quarkus-core::jar:2.16.3.Final
 io.quarkus:quarkus-credentials::jar:2.16.3.Final
 io.quarkus:quarkus-development-mode-spi::jar:2.16.3.Final
 io.quarkus:quarkus-fs-util::jar:0.0.9
 io.quarkus:quarkus-jackson::jar:2.16.3.Final
+io.quarkus:quarkus-jdbc-postgresql::jar:2.16.3.Final
 io.quarkus:quarkus-jsonp::jar:2.16.3.Final
 io.quarkus:quarkus-kubernetes-client-internal::jar:2.16.3.Final
 io.quarkus:quarkus-kubernetes-client::jar:2.16.3.Final
@@ -164,6 +166,7 @@ org.jboss.slf4j:slf4j-jboss-logmanager::jar:1.2.0.Final
 org.jboss.spec.javax.xml.bind:jboss-jaxb-api_2.3_spec::jar:2.0.0.Final
 org.jboss.threads:jboss-threads::jar:3.4.3.Final
 org.latencyutils:LatencyUtils::jar:2.0.3
+org.postgresql:postgresql::jar:42.5.3
 org.reactivestreams:reactive-streams::jar:1.0.3
 org.slf4j:slf4j-api::jar:1.7.36
 org.wildfly.common:wildfly-common::jar:1.5.4.Final-format-001

@@ -71,14 +71,23 @@ uninstall: ## Uninstall CRDs from the K8s cluster specified in ~/.kube/config.
 deploy: ## Deploy controller to the K8s cluster specified in ~/.kube/config.
 	kubectl apply -f target/kubernetes/kubernetes.yml
 
+kustomized-deploy: ## Deploy controller to the K8s cluster specified in ~/.kube/config. with Kustomize
+	kubectl apply -k src/main/kubernetes
+
+kustomized-undeploy: ## Undeploy controller from the K8s cluster specified in ~/.kube/config.
+	kubectl delete -k src/main/kubernetes
+
 undeploy: ## Undeploy controller from the K8s cluster specified in ~/.kube/config.
 	kubectl delete -f target/kubernetes/kubernetes.yml
+
+copy-resources:
+	cp -R target/kubernetes/* src/main/kubernetes
 
 ##@Bundle
 .PHONY: bundle
 bundle:  ## Generate bundle manifests and metadata, then validate generated files.
 ## marker
-	cat target/kubernetes/games.kubegame.systemcraftsman.com-v1alpha1.yml target/kubernetes/kubernetes.yml | operator-sdk generate bundle -q --overwrite --version $(VERSION) $(BUNDLE_METADATA_OPTS)
+	cat target/kubernetes/games.kubegame.systemcraftsman.com-v1alpha1.yml target/kubernetes/worlds.kubegame.systemcraftsman.com-v1alpha1.yml target/kubernetes/avatars.kubegame.systemcraftsman.com-v1alpha1.yml target/kubernetes/kubernetes.yml | operator-sdk generate bundle -q --overwrite --version $(VERSION) $(BUNDLE_METADATA_OPTS)
 	operator-sdk bundle validate ./bundle
 	
 .PHONY: bundle-build

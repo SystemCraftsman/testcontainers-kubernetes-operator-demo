@@ -1,4 +1,13 @@
-com/systemcraftsman/kubegame/GameSpec.class
-com/systemcraftsman/kubegame/GameStatus.class
-com/systemcraftsman/kubegame/GameReconciler.class
-com/systemcraftsman/kubegame/Game.class
+com/systemcraftsman/kubegame/service/GameService.class
+com/systemcraftsman/kubegame/spec/WorldSpec.class
+com/systemcraftsman/kubegame/spec/model/Database.class
+com/systemcraftsman/kubegame/customresource/Game.class
+com/systemcraftsman/kubegame/status/WorldStatus.class
+com/systemcraftsman/kubegame/customresource/World.class
+com/systemcraftsman/kubegame/status/Status.class
+com/systemcraftsman/kubegame/reconciler/GameReconciler.class
+com/systemcraftsman/kubegame/reconciler/WorldReconciler.class
+com/systemcraftsman/kubegame/status/GameStatus.class
+com/systemcraftsman/kubegame/service/PostgresService.class
+com/systemcraftsman/kubegame/spec/GameSpec.class
+com/systemcraftsman/kubegame/service/WorldService.class

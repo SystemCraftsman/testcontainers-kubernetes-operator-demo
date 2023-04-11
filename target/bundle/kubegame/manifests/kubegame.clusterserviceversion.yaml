@@ -5,6 +5,9 @@ metadata:
 spec:
   customresourcedefinitions:
     owned:
+    - kind: World
+      name: worlds.kubegame.systemcraftsman.com
+      version: v1alpha1
     - kind: Game
       name: games.kubegame.systemcraftsman.com
       version: v1alpha1
@@ -16,9 +19,9 @@ spec:
         - apiGroups:
           - kubegame.systemcraftsman.com
           resources:
-          - games
-          - games/status
-          - games/finalizers
+          - worlds
+          - worlds/status
+          - worlds/finalizers
           verbs:
           - get
           - list
@@ -34,6 +37,20 @@ spec:
           verbs:
           - get
           - list
+        - apiGroups:
+          - kubegame.systemcraftsman.com
+          resources:
+          - games
+          - games/status
+          - games/finalizers
+          verbs:
+          - get
+          - list
+          - watch
+          - patch
+          - update
+          - create
+          - delete
         serviceAccountName: kubegame-operator
       deployments:
       - name: kubegame-operator
@@ -46,8 +63,8 @@ spec:
           template:
             metadata:
               annotations:
-                app.quarkus.io/commit-id: b020027e12616727094de7401ad812b57d571d65
-                app.quarkus.io/build-timestamp: 2023-04-08 - 22:52:49 +0000
+                app.quarkus.io/commit-id: d81e5570bd3af5068aed5755d48174b1660ab79b
+                app.quarkus.io/build-timestamp: 2023-04-11 - 21:24:53 +0000
                 prometheus.io/scrape: "true"
                 prometheus.io/path: /q/metrics
                 prometheus.io/port: "8080"
@@ -62,7 +79,7 @@ spec:
                   valueFrom:
                     fieldRef:
                       fieldPath: metadata.namespace
-                image: mabulgu/kubegame-operator:0.0.1-SNAPSHOT
+                image: quay.io/systemcraftsman/kubegame-operator:0.0.1-SNAPSHOT
                 imagePullPolicy: Always
                 livenessProbe:
                   failureThreshold: 3
