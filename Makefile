@@ -72,16 +72,13 @@ deploy: ## Deploy controller to the K8s cluster specified in ~/.kube/config.
 	kubectl apply -f target/kubernetes/kubernetes.yml
 
 kustomized-deploy: ## Deploy controller to the K8s cluster specified in ~/.kube/config. with Kustomize
-	kubectl apply -k src/main/kubernetes
+	cp target/kubernetes/kubernetes.yml src/main/kubernetes/kubernetes.yml && kubectl apply -k src/main/kubernetes
 
 kustomized-undeploy: ## Undeploy controller from the K8s cluster specified in ~/.kube/config.
 	kubectl delete -k src/main/kubernetes
 
 undeploy: ## Undeploy controller from the K8s cluster specified in ~/.kube/config.
 	kubectl delete -f target/kubernetes/kubernetes.yml
-
-copy-resources:
-	cp -R target/kubernetes/* src/main/kubernetes
 
 ##@Bundle
 .PHONY: bundle
