@@ -11,39 +11,40 @@ import io.javaoperatorsdk.operator.api.reconciler.Reconciler;
 import io.javaoperatorsdk.operator.api.reconciler.UpdateControl;
 
 import javax.inject.Inject;
+import java.time.Duration;
 
 public class GameReconciler implements Reconciler<Game> {
-    private final KubernetesClient client;
+
+    @Inject
+    KubernetesClient client;
 
     @Inject
     private GameService gameService;
 
-    public GameReconciler(KubernetesClient client) {
-        this.client = client;
-    }
-
     @Override
     public UpdateControl<Game> reconcile(Game resource, Context context) {
 
-        Deployment postgresDeployment = gameService.getPostgresDeployment(client, resource);
-        Service postgresService = gameService.getPostgresService(client, resource);
+        Deployment postgresDeployment = gameService.getPostgresDeployment(resource);
+        Service postgresService = gameService.getPostgresService(resource);
 
         if (postgresDeployment == null) {
-            postgresDeployment = gameService.createPostgresDeployment(client, resource);
+            postgresDeployment = gameService.createPostgresDeployment(resource);
         }
 
         if (postgresService == null) {
-            gameService.createPostgresService(client, resource);
+            gameService.createPostgresService(resource);
         }
 
-        if(postgresDeployment.getStatus().getReadyReplicas() == postgresDeployment.getStatus().getReplicas()){
-            GameStatus status = new GameStatus();
+        if(postgresDeployment.getStatus() != null &&
+                postgresDeployment.getStatus().getReadyReplicas() == postgresDeployment.getStatus().getReplicas()){
+            GameStatus status = resource.getStatus();
             status.setReady(true);
-            resource.setStatus(status);
+            status.setMsg("All dependencies are ready");
+
             return UpdateControl.updateStatus(resource);
         }
 
-        return UpdateControl.noUpdate();
+        return UpdateControl.<Game>noUpdate().rescheduleAfter(Duration.ofSeconds(5));
     }
 }
 

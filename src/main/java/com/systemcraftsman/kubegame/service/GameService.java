@@ -5,8 +5,11 @@ import io.fabric8.kubernetes.api.model.*;
 import io.fabric8.kubernetes.api.model.apps.Deployment;
 import io.fabric8.kubernetes.api.model.apps.DeploymentBuilder;
 import io.fabric8.kubernetes.client.KubernetesClient;
+import io.fabric8.kubernetes.client.dsl.ServiceResource;
+import io.quarkus.runtime.configuration.ProfileManager;
 
 import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Inject;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -14,9 +17,19 @@ import java.util.Map;
 public class GameService {
 
     private static final String POSTGRES_SUFFIX = "-postgres";
-    private static final int POSTGRES_DB_PORT = 5432;
+    public static final int POSTGRES_DB_PORT = 5432;
 
-    public Deployment getPostgresDeployment(KubernetesClient client, Game game) {
+    @Inject
+    KubernetesClient client;
+
+    public Game getGame(String name, String namespace) {
+        return client.resources(Game.class)
+                .inNamespace(namespace)
+                .withName(name)
+                .get();
+    }
+
+    public Deployment getPostgresDeployment(Game game) {
         return client.apps()
                 .deployments()
                 .inNamespace(game.getMetadata().getNamespace())
@@ -24,14 +37,15 @@ public class GameService {
                 .get();
     }
 
-    public Service getPostgresService(KubernetesClient client, Game game) {
-        return client.services()
+    public Service getPostgresService(Game game) {
+        Service service = client.services()
                 .inNamespace(game.getMetadata().getNamespace())
-                .withName(game.getMetadata().getName() + POSTGRES_SUFFIX)
-                .get();
+                .withName(game.getMetadata().getName() + POSTGRES_SUFFIX).get();
+
+        return service;
     }
 
-    public Deployment createPostgresDeployment(KubernetesClient client, Game game) {
+    public Deployment createPostgresDeployment(Game game) {
         Deployment deployment = new DeploymentBuilder()
                 .withNewMetadata()
                 .withName(game.getMetadata().getName() + POSTGRES_SUFFIX)
@@ -85,7 +99,7 @@ public class GameService {
         return deployment;
     }
 
-    public Service createPostgresService(KubernetesClient client, Game game) {
+    public Service createPostgresService(Game game) {
         Service service = new ServiceBuilder()
                 .withNewMetadata()
                 .withName(game.getMetadata().getName() + POSTGRES_SUFFIX)
@@ -102,8 +116,21 @@ public class GameService {
                 .endSpec()
                 .build();
 
+        service.addOwnerReference(game);
         client.services().resource(service).create();
+
+        if(service != null && ProfileManager.getActiveProfile() != "prod") {
+            client.services().resource(service).portForward(POSTGRES_DB_PORT, POSTGRES_DB_PORT);
+        }
+
         return service;
+    }
+
+    public String getPostgresServiceName(Game game){
+        if(ProfileManager.getActiveProfile() != "prod") {
+            return "localhost";
+        }
+        return game.getMetadata().getName() + POSTGRES_SUFFIX;
     }
 
     private Map<String, String> getLabels(Game game) {
@@ -111,4 +138,5 @@ public class GameService {
         labels.put("game", game.getMetadata().getName());
         return labels;
     }
+
 }

@@ -9,5 +9,17 @@ import io.fabric8.kubernetes.model.annotation.Version;
 
 @Version("v1alpha1")
 @Group("kubegame.systemcraftsman.com")
-public class World extends CustomResource<WorldSpec, WorldStatus> implements Namespaced {}
+public class World extends CustomResource<WorldSpec, WorldStatus> implements Namespaced {
+
+    @Override
+    protected WorldSpec initSpec() {
+        return new WorldSpec();
+    }
+
+    @Override
+    protected WorldStatus initStatus() {
+        return new WorldStatus();
+    }
+
+}
 
