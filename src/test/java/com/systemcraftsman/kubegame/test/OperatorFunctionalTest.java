@@ -114,4 +114,30 @@ public class OperatorFunctionalTest {
 
     }
 
+    @Test
+    @Order(3)
+    void testDeletion() throws InterruptedException, SQLException {
+        client.resources(World.class).inNamespace(NAMESPACE)
+                .load(getClass().getResource("/examples/archaide.yaml").getFile()).delete();
+        client.resources(World.class).inNamespace(NAMESPACE)
+                .load(getClass().getResource("/examples/incipio.yaml").getFile()).delete();
+        client.resources(World.class).inNamespace(NAMESPACE)
+                .load(getClass().getResource("/examples/chthonia.yaml").getFile()).delete();
+
+        await().atMost(60, TimeUnit.SECONDS).untilAsserted(() -> {
+            Assert.assertNull(worldService.getWorld("archaide", NAMESPACE));
+            Assert.assertNull(worldService.getWorld("incipio", NAMESPACE));
+            Assert.assertNull(worldService.getWorld("chthonia", NAMESPACE));
+        });
+
+        client.resources(Game.class).inNamespace(NAMESPACE)
+                .load(getClass().getResource("/examples/oasis.yaml").getFile()).delete();
+
+        await().atMost(60, TimeUnit.SECONDS).untilAsserted(() -> {
+            Assert.assertNull(gameService.getGame("oasis", NAMESPACE));
+            Assert.assertNull(client.apps().deployments().inNamespace(NAMESPACE).withName("oasis-postgres").get());
+            Assert.assertNull(client.services().inNamespace(NAMESPACE).withName("oasis-postgres").get());
+        });
+    }
+
 }
