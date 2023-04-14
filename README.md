@@ -1,5 +1,1 @@
-# KubeGame
-
-A Gamification Operator for Kubernetes
-
-WIP
+# testcontainers-kubernetes-operator-demo
