@@ -21,7 +21,6 @@ import java.util.concurrent.TimeUnit;
 import static org.testcontainers.shaded.org.awaitility.Awaitility.await;
 
 //TODO: Add @QuarkusTestResource annotation to enable the K3sResource for using the K3sContainer
-@QuarkusTestResource(K3sResource.class)
 @QuarkusTest
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
@@ -59,7 +58,7 @@ public class OperatorFunctionalTest {
     //TODO: Add a test for a Game object creation and assert its status and the dependants
     @Test
     @Order(1)
-    void testGame() throws InterruptedException {
+    void testGame() {
         //Apply the oasis.yaml resource, which is a Game resource.
         client.resources(Game.class).inNamespace(NAMESPACE)
                 .load(getClass().getResource("/examples/oasis.yaml").getFile()).create();
@@ -88,7 +87,7 @@ public class OperatorFunctionalTest {
     //TODO: Add a test for World objects creation and assert their status and the dependants
     @Test
     @Order(2)
-    void testWorld() throws InterruptedException, SQLException {
+    void testWorld() throws SQLException {
         //Apply the YAML resources for the worlds "archaide", "incipio", "chthonia"
         client.resources(World.class).inNamespace(NAMESPACE)
                 .load(getClass().getResource("/examples/archaide.yaml").getFile()).create();
@@ -135,7 +134,7 @@ public class OperatorFunctionalTest {
     //TODO: Add a test for deletion of the World and Game objects and assert their dependants are deleted
     @Test
     @Order(3)
-    void testDeletion() throws InterruptedException, SQLException {
+    void testDeletion() {
         //Delete the worlds "archaide", "incipio", "chthonia"
         client.resources(World.class).inNamespace(NAMESPACE)
                 .load(getClass().getResource("/examples/archaide.yaml").getFile()).delete();
