@@ -1,14 +1,11 @@
 package com.systemcraftsman.kubegame.test;
 
 import io.quarkus.test.common.QuarkusTestResourceLifecycleManager;
-import org.testcontainers.containers.output.Slf4jLogConsumer;
 import org.testcontainers.k3s.K3sContainer;
 import org.testcontainers.utility.DockerImageName;
 
 import java.util.Collections;
 import java.util.Map;
-
-import static io.javaoperatorsdk.operator.api.config.ConfigurationService.log;
 
 public class K3sResource implements QuarkusTestResourceLifecycleManager {
 
