@@ -21,6 +21,7 @@ import java.util.concurrent.TimeUnit;
 import static org.testcontainers.shaded.org.awaitility.Awaitility.await;
 
 //TODO: Add @QuarkusTestResource annotation to enable the K3sResource for using the K3sContainer
+@QuarkusTestResource(K3sResource.class)
 @QuarkusTest
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
