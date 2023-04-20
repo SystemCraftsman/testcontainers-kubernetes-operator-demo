@@ -45,13 +45,11 @@ public class OperatorFunctionalTest {
     @Inject
     PostgresService postgresService;
 
-    //TODO: Start the operator instance
     @BeforeAll
     void startOperator() {
         operator.start();
     }
 
-    //TODO: Stop the operator instance
     @AfterAll
     void stopOperator() {
         operator.stop();
