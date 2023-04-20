@@ -11,6 +11,7 @@ import io.javaoperatorsdk.operator.Operator;
 import io.quarkus.test.common.QuarkusTestResource;
 import io.quarkus.test.junit.QuarkusTest;
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.jupiter.api.*;
 
 import javax.inject.Inject;
@@ -59,7 +60,7 @@ public class OperatorFunctionalTest {
     //TODO: Add a test for a Game object creation and assert its status and the dependants
     @Test
     @Order(1)
-    void testGame() {
+    public void testGame() {
         //Apply the oasis.yaml resource, which is a Game resource.
         client.resources(Game.class).inNamespace(NAMESPACE)
                 .load(getClass().getResource("/examples/oasis.yaml").getFile()).create();
@@ -88,7 +89,7 @@ public class OperatorFunctionalTest {
     //TODO: Add a test for World objects creation and assert their status and the dependants
     @Test
     @Order(2)
-    void testWorld() throws SQLException {
+    public void testWorld() throws SQLException {
         //Apply the YAML resources for the worlds "archaide", "incipio", "chthonia"
         client.resources(World.class).inNamespace(NAMESPACE)
                 .load(getClass().getResource("/examples/archaide.yaml").getFile()).create();
@@ -135,7 +136,7 @@ public class OperatorFunctionalTest {
     //TODO: Add a test for deletion of the World and Game objects and assert their dependants are deleted
     @Test
     @Order(3)
-    void testDeletion() {
+    public void testDeletion() {
         //Delete the worlds "archaide", "incipio", "chthonia"
         client.resources(World.class).inNamespace(NAMESPACE)
                 .load(getClass().getResource("/examples/archaide.yaml").getFile()).delete();
