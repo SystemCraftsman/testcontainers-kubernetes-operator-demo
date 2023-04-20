@@ -54,9 +54,18 @@ public class OperatorFunctionalTest {
     }
 
     //TODO: Add a test for a Game object creation and assert its status and the dependants
+    @Test
+    @Order(1)
+    public void testGame() {}
 
     //TODO: Add a test for World objects creation and assert their status and the dependants
+    @Test
+    @Order(2)
+    public void testWorld() throws SQLException {}
 
     //TODO: Add a test for deletion of the World and Game objects and assert their dependants are deleted
+    @Test
+    @Order(3)
+    public void testDeletion() {}
 
 }
